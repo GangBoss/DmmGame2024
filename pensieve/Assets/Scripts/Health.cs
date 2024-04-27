@@ -1,13 +1,19 @@
+using System;
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
+    public event Action OnDamage;
+    public event Action OnDeath;
 
     void Start()
     {
         currentHealth = maxHealth;
+        StartInteracting(this);
     }
 
     public void TakeDamage(int damageAmount)
@@ -15,12 +21,33 @@ public class Health : MonoBehaviour
         currentHealth -= damageAmount;
         if(currentHealth <= 0)
         {
-            Die();
+            Destroy(gameObject);
+            if (OnDeath != null)
+            {
+                OnDeath();
+            }
+        }
+        
+        if (OnDamage != null)
+        {
+            OnDamage();
         }
     }
 
-    void Die()
+    private int damage = 10;
+    private int delay = 10;
+
+    public void StartInteracting(Health health)
     {
-        Destroy(gameObject);
+        StartCoroutine(Damage(health, delay));
+    }
+
+    IEnumerator Damage(Health health, float time)
+    {
+        Debug.Log("Started");
+        yield return new WaitForSeconds(time);
+                Debug.Log("Waited");
+        health.TakeDamage(damage);
+                Debug.Log("Damaged");
     }
 }
