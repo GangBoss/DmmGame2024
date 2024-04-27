@@ -8,6 +8,13 @@ public class Cherecter : MonoBehaviour
     public GameObject missile;
     public float lifetime = 3f;
     public float projectileSpeed = 5f;
+    public Health health;
+
+    void Start()
+    {
+        health = GetComponent<Health>();
+        health.OnDeath+=()=> Destroy(this);
+    }
 
     void Attack()
     {
