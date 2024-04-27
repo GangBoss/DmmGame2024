@@ -10,16 +10,7 @@ public class CameraFollow : MonoBehaviour
     {
         transform.position = target.position + Vector3.forward *-10;
     }
-
-    // private void LateUpdate()
-    // {
-    //     if (diff.magnitude > 5)
-    //     {
-    //         diff= diff.normalized*5;
-    //         transform.position = target.position + -diff + Vector3.forward *-10;
-    //     }
-    // }
-
+    
     void FixedUpdate()
     {
         diff = target.position - transform.position + Vector3.forward *-10;

@@ -6,20 +6,22 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     public int maxHealth = 100;
-    public int currentHealth;
+    public int currentHealth = 100;
+    public int damage;
+    public int delay;
     public event Action OnDamage;
     public event Action OnDeath;
 
     void Start()
     {
         currentHealth = maxHealth;
-        StartInteracting(this);
+        StartInteracting();
     }
 
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Destroy(gameObject);
             if (OnDeath != null)
@@ -27,27 +29,24 @@ public class Health : MonoBehaviour
                 OnDeath();
             }
         }
-        
+
         if (OnDamage != null)
         {
             OnDamage();
         }
     }
 
-    private int damage = 10;
-    private int delay = 10;
-
-    public void StartInteracting(Health health)
+    private void StartInteracting()
     {
-        StartCoroutine(Damage(health, delay));
+        StartCoroutine(Damage(delay));
     }
 
-    IEnumerator Damage(Health health, float time)
+    IEnumerator Damage(float time)
     {
-        Debug.Log("Started");
-        yield return new WaitForSeconds(time);
-                Debug.Log("Waited");
-        health.TakeDamage(damage);
-                Debug.Log("Damaged");
+        while (currentHealth > 0)
+        {
+            yield return new WaitForSeconds(time);
+            TakeDamage(damage);
+        }
     }
 }

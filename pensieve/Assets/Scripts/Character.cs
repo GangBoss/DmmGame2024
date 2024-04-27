@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cherecter : MonoBehaviour
+public class Character : MonoBehaviour
 {
     Rigidbody2D rig;
     public float x, y;
@@ -13,17 +13,13 @@ public class Cherecter : MonoBehaviour
     public GameObject missile;
     public float lifetime = 3f;
     public float projectileSpeed = 5f;
-    public Health health;
-
-    void Start()
-    {
-        health = GetComponent<Health>();
-        health.OnDeath+=()=> Destroy(this);
-    }
+    private Health health;
 
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
+        health.OnDeath+=()=> Destroy(this);
     }
 
     void Update()
