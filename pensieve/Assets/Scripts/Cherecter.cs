@@ -8,7 +8,7 @@ public class Cherecter : MonoBehaviour
     public GameObject missile;
     public float lifetime = 3f;
     public float projectileSpeed = 5f;
-
+    
     void Attack()
     {
         Vector3 mousePosition = Input.mousePosition;

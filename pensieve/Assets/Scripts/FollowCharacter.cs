@@ -1,16 +1,31 @@
+using System;
 using UnityEngine;
 
-public class FollowCharacter : MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
-    public Transform target;
-    public float smoothSpeed = 0.125f;
-    public float distanceFromTarget = 10f; // Удаленность камеры от персонажа
-
-    void LateUpdate()
+    public Transform target; // Ссылка на трансформ персонажа
+    private float smoothSpeed = 0.015f; // Сглаживание движения
+    private Vector3 diff;
+    void Start()
     {
-        Vector3 desiredPosition = target.position - transform.forward * distanceFromTarget;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = target.position + Vector3.forward *-10;
+    }
 
-        transform.position = smoothedPosition;
+    // private void LateUpdate()
+    // {
+    //     if (diff.magnitude > 5)
+    //     {
+    //         diff= diff.normalized*5;
+    //         transform.position = target.position + -diff + Vector3.forward *-10;
+    //     }
+    // }
+
+    void FixedUpdate()
+    {
+        diff = target.position - transform.position + Vector3.forward *-10;
+        if ( diff.magnitude>1)
+        {
+            transform.position = Vector3.Lerp(transform.position, target.position+ Vector3.forward *-10, smoothSpeed); // Сглаживаем движение камеры
+        }
     }
 }
