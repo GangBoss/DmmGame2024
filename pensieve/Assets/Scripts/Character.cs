@@ -5,16 +5,11 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     Rigidbody2D rig;
-    public float x, y;
-    public bool w;
-    public float r, l;
     public float speed = 5f;
-    public float roter = 2;
-    public GameObject missile;
-    public float lifetime = 3f;
-    public float projectileSpeed = 5f;
+    public GameObject projectile;
+    private float x, y;
+    private float weaponRate;
     private Health health;
-
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -36,7 +31,6 @@ public class Character : MonoBehaviour
     private void FixedUpdate()
     {
         rig.AddForce((transform.up*y + transform.right*x)*speed, ForceMode2D.Force);
-        transform.Rotate(0, 0, (r + l*-1)*roter);
     }
 
     void Attack()
@@ -47,17 +41,10 @@ public class Character : MonoBehaviour
 
         Vector3 direction = (targetPosition - transform.position).normalized;
 
-        GameObject projectile = Instantiate(missile, transform.position + direction*0.5f, Quaternion.identity);
-
-        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        rb.velocity = direction*projectileSpeed*10;
-
-        StartCoroutine(DestroyMissileAfterTime(projectile, lifetime));
+        GameObject obj= Instantiate(this.projectile, transform.position + direction*0.5f, Quaternion.identity);
+        var projectile= obj.GetComponent<Projectile>();
+        projectile.MoveTo(direction);
     }
 
-    IEnumerator DestroyMissileAfterTime(GameObject obj, float time)
-    {
-        yield return new WaitForSeconds(time);
-        Destroy(obj);
-    }
+    
 }

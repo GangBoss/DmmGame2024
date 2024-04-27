@@ -10,7 +10,7 @@ public class CameraFollow : MonoBehaviour
     {
         transform.position = target.position + Vector3.forward *-10;
     }
-    
+
     void FixedUpdate()
     {
         diff = target.position - transform.position + Vector3.forward *-10;
