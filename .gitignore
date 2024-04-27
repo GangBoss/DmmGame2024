@@ -2,7 +2,7 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-
+pensieve/[Aa]ssets/[Ss]cripts/.idea/*
 pensieve/[Ll]ibrary/*
 pensieve/[Tt]emp/*
 pensieve/[Oo]bj/*
