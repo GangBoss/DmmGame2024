@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class FollowCharacter : MonoBehaviour
 {
-    public Transform target; // Ссылка на трансформ персонажа
-    public float smoothSpeed = 0.125f; // Сглаживание движения
+    public Transform target;
+    public float smoothSpeed = 0.125f;
+    public float distanceFromTarget = 10f; // Удаленность камеры от персонажа
 
     void LateUpdate()
     {
-        Vector3 desiredPosition = target.position + new Vector3(0, 0, -10); // Устанавливаем позицию камеры на позиции персонажа
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed); // Сглаживаем движение камеры
+        Vector3 desiredPosition = target.position - transform.forward * distanceFromTarget;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
-        transform.position = smoothedPosition; // Присваиваем новую позицию камере
+        transform.position = smoothedPosition;
     }
 }
