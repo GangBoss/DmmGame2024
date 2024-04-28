@@ -54,10 +54,11 @@ public class TilemapVisualizer : MonoBehaviour
             PaintSingleTile(wallTilemap, tile, position);
     }
 
-    private void PaintSingleTile(Tilemap tilemap, TileBase tile, Vector2Int position)
+    private Tilemap PaintSingleTile(Tilemap tilemap, TileBase tile, Vector2Int position)
     {
         var tilePosition = tilemap.WorldToCell((Vector3Int)position);
         tilemap.SetTile(tilePosition, tile);
+        return tilemap;
     }
 
     public void Clear()
